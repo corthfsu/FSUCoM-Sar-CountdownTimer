@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FSU College of Medicine | Countdown Timers</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* FSU Primary & Secondary Brand Palette */
+      --garnet-deep: #320A13;
+      --garnet-primary: #782F40;
+      --gold-primary: #CEB888;
+      --gold-bright: #FBF0D9;
+      --gold-dark: #8F7645;
+      --stadium-night: #101820;
+      --text-white: #FFFFFF;
+      --card-border: rgba(206, 184, 136, 0.5);
+      --digit-box-bg: rgba(16, 24, 32, 0.95);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #4E1824 0%, var(--garnet-deep) 75%, #100205 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-white);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1vh 1.8vw;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(var(--gold-dark) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.12;
+      pointer-events: none;
+    }
+
+    header {
+      position: relative;
+      z-index: 2;
+      height: 5.5vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1.5px solid rgba(206, 184, 136, 0.35);
+      padding-bottom: 0.3vh;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 0.8vw;
+    }
+
+    .torch-badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-bright);
+      font-family: 'Cinzel', serif;
+      font-weight: 800;
+      font-size: 14px;
+      background: rgba(0, 0, 0, 0.45);
+    }
+
+    .brand-text h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.85rem, 1.2vw, 1.45rem);
+      letter-spacing: 2px;
+      font-weight: 800;
+      color: var(--gold-bright);
+      line-height: 1.1;
+    }
+
+    .brand-text p {
+      font-size: clamp(0.65rem, 0.85vw, 1rem);
+      color: #E2D6BE;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+
+    .status-group {
+      display: flex;
+      align-items: center;
+      gap: 1vw;
+    }
+
+    .live-clock {
+      font-family: 'Inter', monospace;
+      font-size: clamp(0.75rem, 1vw, 1.15rem);
+      font-weight: 700;
+      color: var(--gold-primary);
+      background: rgba(0, 0, 0, 0.55);
+      padding: 0.4vh 0.8vw;
+      border-radius: 5px;
+      border: 1.5px solid rgba(206, 184, 136, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 10px #4ade80;
+    }
+
+    .fs-button {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1.5px solid rgba(206, 184, 136, 0.45);
+      color: var(--gold-primary);
+      padding: 0.4vh 0.7vw;
+      border-radius: 5px;
+      font-size: clamp(0.7rem, 0.85vw, 1rem);
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    main {
+      position: relative;
+      z-index: 2;
+      height: 89vh;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4vh;
+      justify-content: space-between;
+    }
+
+    /* TOP HALF: 3 EVENT CARDS (43% height) */
+    .top-half-grid {
+      height: 43%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2vw;
+    }
+
+    .holiday-card {
+      background: linear-gradient(175deg, rgba(20, 58, 34, 0.88) 0%, rgba(10, 30, 18, 0.95) 100%);
+      border: 2px solid rgba(90, 190, 125, 0.55);
+      border-radius: 12px;
+      padding: 1vh 1.1vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .holiday-card.grad-card {
+      background: linear-gradient(175deg, rgba(50, 10, 19, 0.95) 0%, rgba(16, 24, 32, 0.98) 100%);
+      border-color: rgba(206, 184, 136, 0.75);
+      box-shadow: 0 0 20px rgba(206, 184, 136, 0.25);
+    }
+
+    .holiday-card::before {
+      content: "";
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      bottom: 5px;
+      border: 1.5px dashed rgba(206, 184, 136, 0.3);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .holiday-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6vw;
+      padding: 0 0.2vw;
+    }
+
+    .holiday-header-text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2vh;
+    }
+
+    .holiday-art {
+      width: clamp(48px, 4.2vw, 68px);
+      height: clamp(48px, 4.2vw, 68px);
+      flex-shrink: 0;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.7));
+    }
+
+    .holiday-badge {
+      font-size: clamp(0.6rem, 0.8vw, 0.95rem);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #FFFFFF;
+      font-weight: 800;
+      background: rgba(0, 0, 0, 0.65);
+      padding: 0.2vh 0.6vw;
+      border-radius: 50px;
+      align-self: flex-start;
+      border: 1px solid rgba(206, 184, 136, 0.6);
+    }
+
+    .holiday-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.15rem, 1.85vw, 2.3rem);
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: 1.2px;
+      line-height: 1.05;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    .holiday-date {
+      font-size: clamp(0.65rem, 0.85vw, 1.05rem);
+      color: #F0FDF4;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .holiday-timer {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5vw;
+      width: 100%;
+    }
+
+    .mini-box {
+      background: rgba(16, 24, 32, 0.92);
+      border: 1.5px solid rgba(206, 184, 136, 0.5);
+      border-radius: 7px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0.8vh 0;
+    }
+
+    .mini-digit {
+      font-family: 'Cinzel', monospace;
+      font-size: clamp(1.4rem, 2.3vw, 2.9rem);
+      font-weight: 900;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+
+    .mini-label {
+      font-size: clamp(0.55rem, 0.75vw, 0.95rem);
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 800;
+      margin-top: 0.3vh;
+    }
+
+    /* BOTTOM HALF: MATCH DAY HERO (55% height) */
+    .hero-match-card {
+      height: 55%;
+      background: linear-gradient(135deg, rgba(24, 6, 11, 0.96) 0%, rgba(52, 12, 23, 0.92) 100%);
+      border: 2.5px solid var(--gold-primary);
+      border-radius: 14px;
+      padding: 1.5vh 2.2vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.7), inset 0 0 35px rgba(206, 184, 136, 0.12);
+    }
+
+    .match-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 100%;
+    }
+
+    .match-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4vh;
+    }
+
+    .match-tag {
+      font-size: clamp(0.7rem, 0.95vw, 1.15rem);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold-bright);
+      font-weight: 800;
+      background: rgba(206, 184, 136, 0.22);
+      display: inline-block;
+      align-self: flex-start;
+      padding: 0.3vh 0.9vw;
+      border-radius: 50px;
+      border: 1.5px solid var(--gold-primary);
+    }
+
+    .match-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 3.4vw, 4.2rem);
+      font-weight: 900;
+      color: var(--gold-bright);
+      letter-spacing: 2px;
+      line-height: 1.05;
+      text-shadow: 0 4px 14px rgba(0,0,0,0.95);
+    }
+
+    .match-subtitle {
+      font-size: clamp(0.85rem, 1.25vw, 1.55rem);
+      color: #FFF6E5;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    /* ENLARGED HERO TIMER GRID */
+    .hero-timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.4vw;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .hero-box {
+      background: var(--digit-box-bg);
+      border: 2.5px solid rgba(206, 184, 136, 0.65);
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.4vh 0;
+      box-shadow: inset 0 4px 12px rgba(0,0,0,0.95), 0 8px 20px rgba(0,0,0,0.7);
+      position: relative;
+    }
+
+    .hero-box::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      height: 1px;
+      background: rgba(206, 184, 136, 0.35);
+    }
+
+    .hero-digit {
+      font-family: 'Cinzel', monospace;
+      font-size: clamp(3rem, 6vw, 7.2rem);
+      font-weight: 900;
+      color: #FFFFFF;
+      line-height: 1;
+      letter-spacing: 2px;
+    }
+
+    .hero-box.unit-seconds .hero-digit {
+      color: var(--gold-bright);
+    }
+
+    .hero-label {
+      font-size: clamp(0.75rem, 1.05vw, 1.35rem);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: var(--gold-primary);
+      font-weight: 900;
+      margin-top: 0.6vh;
+    }
+
+    .match-art-container {
+      width: clamp(160px, 20vw, 290px);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-left: 1.5vw;
+    }
+
+    .envelope-svg {
+      width: 100%;
+      height: auto;
+      max-height: 95%;
+      filter: drop-shadow(0 8px 18px rgba(0,0,0,0.9));
+    }
+
+    footer {
+      position: relative;
+      z-index: 2;
+      height: 3.2vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1.5px solid rgba(206, 184, 136, 0.3);
+      font-size: clamp(0.65rem, 0.8vw, 1rem);
+      font-weight: 600;
+      color: #D3C4A5;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-group">
+      <div class="torch-badge">FSU</div>
+      <div class="brand-text">
+        <h1>FLORIDA STATE UNIVERSITY</h1>
+        <p>College of Medicine • Daytona Beach Regional Campus</p>
+      </div>
+    </div>
+    <div class="status-group">
+      <div class="live-clock">
+        <span class="live-dot"></span>
+        <span id="headerClock">--:--:-- ET</span>
+      </div>
+      <button class="fs-button" onclick="toggleFullScreen()">[ ⛶ Fullscreen ]</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- TOP HALF: 3 COUNTDOWNS -->
+    <div class="top-half-grid">
+      
+      <!-- 1. WINTER BREAK -->
+      <section class="holiday-card">
+        <div class="holiday-header">
+          <div class="holiday-header-text">
+            <span class="holiday-badge">Recess Begins</span>
+            <h2 class="holiday-title">WINTER BREAK</h2>
+            <p class="holiday-date">FRI, DEC 18, 2026 • 5:00 PM</p>
+          </div>
+          <svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="12,46 22,26 32,46" fill="#153620" stroke="#CEB888" stroke-width="1.5" />
+            <polygon points="26,46 38,20 50,46" fill="#1C472A" stroke="#CEB888" stroke-width="1.5" />
+            <polygon points="38,20 33,30 43,30" fill="#FFFFFF" opacity="0.9" />
+            <rect x="20" y="44" width="24" height="14" fill="#501A24" stroke="#CEB888" stroke-width="1.5" rx="1" />
+            <polygon points="17,44 32,32 47,44" fill="#CEB888" stroke="#F5E6C8" stroke-width="1.5" />
+            <rect x="30" y="49" width="5" height="9" fill="#120407" />
+            <rect x="23" y="47" width="5" height="5" fill="#FFE8A3" stroke="#8F7645" stroke-width="1" />
+            <path d="M4 58 Q32 54 60 58" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="holiday-timer">
+          <div class="mini-box"><span class="mini-digit" id="break-days">--</span><span class="mini-label">Days</span></div>
+          <div class="mini-box"><span class="mini-digit" id="break-hours">--</span><span class="mini-label">Hrs</span></div>
+          <div class="mini-box"><span class="mini-digit" id="break-mins">--</span><span class="mini-label">Mins</span></div>
+          <div class="mini-box"><span class="mini-digit" id="break-secs">--</span><span class="mini-label">Secs</span></div>
+        </div>
+      </section>
+
+      <!-- 2. PA CLASS OF 2026 GRADUATION DAY -->
+      <section class="holiday-card grad-card">
+        <div class="holiday-header">
+          <div class="holiday-header-text">
+            <span class="holiday-badge">Commencement</span>
+            <h2 class="holiday-title" style="color: #FBF0D9; font-size: clamp(0.95rem, 1.4vw, 1.8rem);">PA CLASS OF 2026 GRADUATION</h2>
+            <p class="holiday-date" style="color: #FBF0D9;">SAT, DEC 12, 2026 • 10:00 AM</p>
+          </div>
+          <svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="32,8 58,22 32,36 6,22" fill="#101820" stroke="#CEB888" stroke-width="1.5" />
+            <polygon points="18,29 18,44 32,50 46,44 46,29" fill="#782F40" stroke="#CEB888" stroke-width="1.5" />
+            <path d="M32 22 L50 28 L52 42" stroke="#CEB888" stroke-width="1.8" fill="none" />
+            <circle cx="52" cy="44" r="2.5" fill="#CEB888" />
+            <rect x="10" y="52" width="44" height="8" rx="4" fill="#FFFFFF" stroke="#CEB888" stroke-width="1.2" />
+            <rect x="28" y="52" width="8" height="8" fill="#782F40" />
+          </svg>
+        </div>
+        <div class="holiday-timer">
+          <div class="mini-box"><span class="mini-digit" id="grad-days">--</span><span class="mini-label">Days</span></div>
+          <div class="mini-box"><span class="mini-digit" id="grad-hours">--</span><span class="mini-label">Hrs</span></div>
+          <div class="mini-box"><span class="mini-digit" id="grad-mins">--</span><span class="mini-label">Mins</span></div>
+          <div class="mini-box"><span class="mini-digit" id="grad-secs" style="color: #FFFFFF;">--</span><span class="mini-label">Secs</span></div>
+        </div>
+      </section>
+
+      <!-- 3. NEW YEAR'S DAY -->
+      <section class="holiday-card">
+        <div class="holiday-header">
+          <div class="holiday-header-text">
+            <span class="holiday-badge">New Year 2027</span>
+            <h2 class="holiday-title">NEW YEAR'S DAY</h2>
+            <p class="holiday-date">FRI, JAN 1, 2027 • MIDNIGHT</p>
+          </div>
+          <svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 4 L32 10 M44 8 L40 13 M50 20 L44 21 M20 8 L24 13 M14 20 L20 21" stroke="#F5E6C8" stroke-width="1.8" stroke-linecap="round" />
+            <polygon points="21,24 29,24 26,38 24,38" fill="rgba(255,230,150,0.5)" stroke="#CEB888" stroke-width="1.5" />
+            <line x1="25" y1="38" x2="22" y2="52" stroke="#CEB888" stroke-width="1.8" />
+            <ellipse cx="21" cy="53" rx="5" ry="1.5" fill="#CEB888" />
+            <polygon points="43,24 35,24 38,38 40,38" fill="rgba(255,230,150,0.5)" stroke="#CEB888" stroke-width="1.5" />
+            <line x1="39" y1="38" x2="42" y2="52" stroke="#CEB888" stroke-width="1.8" />
+            <ellipse cx="43" cy="53" rx="5" ry="1.5" fill="#CEB888" />
+            <polygon points="32,20 33,24 37,25 33,26 32,30 31,26 27,25 31,24" fill="#FFFFFF" />
+          </svg>
+        </div>
+        <div class="holiday-timer">
+          <div class="mini-box"><span class="mini-digit" id="ny-days">--</span><span class="mini-label">Days</span></div>
+          <div class="mini-box"><span class="mini-digit" id="ny-hours">--</span><span class="mini-label">Hrs</span></div>
+          <div class="mini-box"><span class="mini-digit" id="ny-mins">--</span><span class="mini-label">Mins</span></div>
+          <div class="mini-box"><span class="mini-digit" id="ny-secs">--</span><span class="mini-label">Secs</span></div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- BOTTOM HALF: PROMINENT MATCH DAY HERO -->
+    <section class="hero-match-card">
+      <div class="match-content">
+        <div class="match-header">
+          <span class="match-tag">National Resident Matching Program</span>
+          <h2 class="match-title">FSU COLLEGE OF MEDICINE MATCH DAY</h2>
+          <p class="match-subtitle">FRIDAY, MARCH 19, 2027 • 12:00:00 PM EDT (RESIDENCY REVEAL)</p>
+        </div>
+
+        <div class="hero-timer-grid">
+          <div>
+            <div class="hero-box"><span class="hero-digit" id="md-days">--</span></div>
+            <div class="hero-label">Days</div>
+          </div>
+          <div>
+            <div class="hero-box"><span class="hero-digit" id="md-hours">--</span></div>
+            <div class="hero-label">Hours</div>
+          </div>
+          <div>
+            <div class="hero-box"><span class="hero-digit" id="md-mins">--</span></div>
+            <div class="hero-label">Minutes</div>
+          </div>
+          <div class="unit-seconds">
+            <div class="hero-box unit-seconds"><span class="hero-digit" id="md-secs">--</span></div>
+            <div class="hero-label">Seconds</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="match-art-container">
+        <svg class="envelope-svg" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="120" cy="120" r="100" fill="url(#goldRadial)" opacity="0.35" />
+          <path d="M70 165 C66 195 75 225 95 240 C108 250 132 250 145 240 C165 225 174 195 170 165" stroke="#CEB888" stroke-width="4.5" stroke-linecap="round" fill="none" />
+          <circle cx="120" cy="246" r="8" fill="#CEB888" />
+          <circle cx="120" cy="56" r="31" fill="#100306" stroke="#CEB888" stroke-width="2.5" />
+          <path d="M46 245 C50 195 78 165 120 165 C162 165 190 195 194 245 Z" fill="#100306" stroke="#CEB888" stroke-width="2.5" />
+          <rect x="72" y="115" width="96" height="64" rx="4" fill="#2A0810" stroke="#CEB888" stroke-width="3" />
+          <polygon points="72,115 120,76 168,115" fill="#44111C" stroke="#CEB888" stroke-width="2.5" />
+          <rect x="80" y="62" width="80" height="70" rx="3" fill="#FFFBF2" stroke="#CEB888" stroke-width="2" />
+          <line x1="91" y1="78" x2="149" y2="78" stroke="#782F40" stroke-width="3.5" stroke-linecap="round" />
+          <line x1="91" y1="91" x2="139" y2="91" stroke="#8F7645" stroke-width="2.5" stroke-linecap="round" />
+          <line x1="91" y1="102" x2="145" y2="102" stroke="#8F7645" stroke-width="2.5" stroke-linecap="round" />
+          <circle cx="120" cy="119" r="6.5" fill="#782F40" />
+          <ellipse cx="68" cy="144" rx="12" ry="8.5" fill="#CEB888" transform="rotate(-15 68 144)" />
+          <ellipse cx="172" cy="144" rx="12" ry="8.5" fill="#CEB888" transform="rotate(15 172 144)" />
+          <polygon points="40,82 45,93 56,98 45,103 40,114 35,103 24,98 35,93" fill="#F5E6C8" />
+          <polygon points="200,72 203,81 212,84 203,88 200,97 196,88 187,84 196,81" fill="#CEB888" />
+          <polygon points="180,36 183,43 190,45 183,47 180,54 177,47 170,45 177,43" fill="#F5E6C8" />
+          <defs>
+            <radialGradient id="goldRadial" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#F5E6C8" />
+              <stop offset="60%" stop-color="#CEB888" />
+              <stop offset="100%" stop-color="#CEB888" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+        </svg>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>FSU COLLEGE OF MEDICINE • VIRES, ARTES, MORES</span>
+    <span>Auto-synced to America/New_York (Daytona Beach)</span>
+  </footer>
+
+  <script>
+    var BREAK_TARGET = new Date('2026-12-18T17:00:00-05:00').getTime();
+    var GRAD_TARGET  = new Date('2026-12-12T10:00:00-05:00').getTime();
+    var NY_TARGET    = new Date('2027-01-01T00:00:00-05:00').getTime();
+    var MATCH_TARGET = new Date('2027-03-19T12:00:00-04:00').getTime();
+
+    function formatNumber(n) {
+      return n < 10 ? '0' + n : '' + n;
+    }
+
+    function calculateDiff(targetTime, currentTime) {
+      var diff = targetTime - currentTime;
+      if (diff <= 0) {
+        return { d: '00', h: '00', m: '00', s: '00' };
+      }
+      var totalSeconds = Math.floor(diff / 1000);
+      var days = Math.floor(totalSeconds / 86400);
+      var rem = totalSeconds % 86400;
+      var hours = Math.floor(rem / 3600);
+      rem = rem % 3600;
+      var minutes = Math.floor(rem / 60);
+      var seconds = rem % 60;
+
+      return {
+        d: formatNumber(days),
+        h: formatNumber(hours),
+        m: formatNumber(minutes),
+        s: formatNumber(seconds)
+      };
+    }
+
+    function setUnitValues(prefix, values) {
+      var d = document.getElementById(prefix + '-days');
+      if (d) {
+        d.textContent = values.d;
+        document.getElementById(prefix + '-hours').textContent = values.h;
+        document.getElementById(prefix + '-mins').textContent = values.m;
+        document.getElementById(prefix + '-secs').textContent = values.s;
+      }
+    }
+
+    function refreshDisplay() {
+      var now = Date.now();
+
+      // Top 3 Event Timers
+      setUnitValues('break', calculateDiff(BREAK_TARGET, now));
+      setUnitValues('grad', calculateDiff(GRAD_TARGET, now));
+      setUnitValues('ny', calculateDiff(NY_TARGET, now));
+
+      // Bottom Hero Match Day Timer
+      setUnitValues('md', calculateDiff(MATCH_TARGET, now));
+
+      // Header Clock
+      var elClock = document.getElementById('headerClock');
+      if (elClock) {
+        try {
+          var estString = new Date().toLocaleTimeString('en-US', {
+            timeZone: 'America/New_York',
+            hour12: true,
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          });
+          elClock.textContent = estString + ' ET';
+        } catch (err) {
+          var dt = new Date();
+          elClock.textContent = formatNumber(dt.getHours()) + ':' + formatNumber(dt.getMinutes()) + ':' + formatNumber(dt.getSeconds()) + ' ET';
+        }
+      }
+    }
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(function() {});
+      } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+
+    refreshDisplay();
+    setInterval(refreshDisplay, 1000);
+  </script>
+</body>
+</html>
