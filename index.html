@@ -3,21 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FSU College of Medicine | Countdown Calendar</title>
+  <title>FSU College of Medicine | Countdown Timers</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;800;900&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <!-- Official FSU Fonts: Open Sans (Primary Body/UI) & EB Garamond (Formal/Secondary Titles) -->
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,600;0,700;0,800;1,600&family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* FSU Brand Palette */
-      --garnet-deep: #320A13;
-      --garnet-primary: #782F40;
-      --gold-primary: #CEB888;
+      /* FSU Primary Palette (brand.fsu.edu/visual-style) */
+      --fsu-garnet: #782F40;        /* FSU Garnet (Primary) */
+      --fsu-gold: #CEB888;          /* FSU Gold (Primary) */
+      --fsu-white: #FFFFFF;         /* White (Primary) */
+      --fsu-stadium-night: #101820; /* Stadium Night (Primary Black) */
+
+      /* FSU Secondary & Accent Palette */
+      --fsu-plaza-brick: #572932;   /* Plaza Brick */
+      --fsu-gulf-sands: #DFD1A7;     /* Gulf Sands */
+      --fsu-vault-garnet: #A6192E;   /* Vault Garnet */
+      --fsu-vault-gold: #FFC72C;     /* Vault Gold */
+      --fsu-legacy-blue: #425563;    /* Legacy Blue */
+
+      /* UI Functional Mappings */
+      --garnet-deep: #2D0F16;
       --gold-bright: #FBF0D9;
       --gold-dark: #8F7645;
-      --stadium-night: #101820;
-      --text-white: #FFFFFF;
-      --card-border: rgba(206, 184, 136, 0.5);
+      --card-border: rgba(206, 184, 136, 0.45);
       --digit-box-bg: rgba(16, 24, 32, 0.95);
     }
 
@@ -32,9 +42,9 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background: radial-gradient(circle at center, #4E1824 0%, var(--garnet-deep) 75%, #100205 100%);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text-white);
+      background: radial-gradient(circle at center, #4E1824 0%, var(--garnet-deep) 75%, #0D0205 100%);
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--fsu-white);
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -54,49 +64,12 @@
     header {
       position: relative;
       z-index: 2;
-      height: 5.5vh;
+      height: 6.2vh;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       border-bottom: 1.5px solid rgba(206, 184, 136, 0.35);
-      padding-bottom: 0.3vh;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 0.8vw;
-    }
-
-    .torch-badge {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 2px solid var(--gold-primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold-bright);
-      font-family: 'Cinzel', serif;
-      font-weight: 800;
-      font-size: 14px;
-      background: rgba(0, 0, 0, 0.45);
-    }
-
-    .brand-text h1 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(0.85rem, 1.2vw, 1.45rem);
-      letter-spacing: 2px;
-      font-weight: 800;
-      color: var(--gold-bright);
-      line-height: 1.1;
-    }
-
-    .brand-text p {
-      font-size: clamp(0.65rem, 0.85vw, 1rem);
-      color: #E2D6BE;
-      letter-spacing: 0.5px;
-      font-weight: 600;
+      padding-bottom: 0.4vh;
     }
 
     .status-group {
@@ -106,11 +79,11 @@
     }
 
     .live-clock {
-      font-family: 'Inter', monospace;
-      font-size: clamp(0.75rem, 1vw, 1.15rem);
+      font-family: 'Open Sans', monospace;
+      font-size: clamp(0.75rem, 0.95vw, 1.1rem);
       font-weight: 700;
-      color: var(--gold-primary);
-      background: rgba(0, 0, 0, 0.55);
+      color: var(--fsu-gold);
+      background: rgba(16, 24, 32, 0.75);
       padding: 0.4vh 0.8vw;
       border-radius: 5px;
       border: 1.5px solid rgba(206, 184, 136, 0.35);
@@ -130,9 +103,10 @@
     .fs-button {
       background: rgba(0, 0, 0, 0.3);
       border: 1.5px solid rgba(206, 184, 136, 0.45);
-      color: var(--gold-primary);
+      color: var(--fsu-gold);
       padding: 0.4vh 0.7vw;
       border-radius: 5px;
+      font-family: 'Open Sans', sans-serif;
       font-size: clamp(0.7rem, 0.85vw, 1rem);
       font-weight: 700;
       cursor: pointer;
@@ -140,83 +114,58 @@
     }
 
     .fs-button:hover {
-      background: rgba(206, 184, 136, 0.2);
-      border-color: var(--gold-bright);
+      background: var(--fsu-garnet);
+      color: var(--fsu-white);
+      border-color: var(--fsu-gold);
     }
 
     main {
       position: relative;
       z-index: 2;
-      height: 89vh;
+      height: 88vh;
       display: flex;
       flex-direction: column;
       gap: 1.4vh;
       justify-content: space-between;
     }
 
-    /* TOP HALF: HORIZONTAL SCROLLBAR CONTAINER */
-    .top-scroll-section {
-      height: 42%;
+    /* TOP HALF: HORIZONTAL SCROLLING EVENT CARD ROW (43% height) */
+    .top-half-grid {
+      height: 43%;
       display: flex;
-      flex-direction: column;
-      gap: 0.4vh;
-    }
-
-    .scroll-section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: clamp(0.65rem, 0.85vw, 0.95rem);
-      color: var(--gold-primary);
-      letter-spacing: 1.5px;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 0 0.2vw;
-    }
-
-    .scroll-hint {
-      font-size: clamp(0.6rem, 0.75vw, 0.85rem);
-      color: #D3C4A5;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-    }
-
-    .top-scroll-container {
-      flex: 1;
-      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
       gap: 1.2vw;
       overflow-x: auto;
       overflow-y: hidden;
-      padding-bottom: 8px;
-      scroll-behavior: smooth;
-      align-items: stretch;
+      padding-bottom: 1vh;
+      scroll-snap-type: x proximity;
 
-      /* Custom scrollbar */
+      /* Visible custom scrollbar */
       scrollbar-width: thin;
       scrollbar-color: var(--gold-dark) rgba(16, 24, 32, 0.6);
     }
 
-    .top-scroll-container::-webkit-scrollbar {
+    .top-half-grid::-webkit-scrollbar {
       height: 7px;
     }
 
-    .top-scroll-container::-webkit-scrollbar-track {
+    .top-half-grid::-webkit-scrollbar-track {
       background: rgba(16, 24, 32, 0.6);
       border-radius: 4px;
     }
 
-    .top-scroll-container::-webkit-scrollbar-thumb {
+    .top-half-grid::-webkit-scrollbar-thumb {
       background: var(--gold-dark);
       border-radius: 4px;
       border: 1px solid rgba(206, 184, 136, 0.3);
     }
 
-    .top-scroll-container::-webkit-scrollbar-thumb:hover {
-      background: var(--gold-primary);
+    .top-half-grid::-webkit-scrollbar-thumb:hover {
+      background: var(--fsu-gold);
     }
 
     .holiday-card {
-      flex: 0 0 clamp(310px, 29vw, 410px);
       background: linear-gradient(175deg, rgba(20, 58, 34, 0.88) 0%, rgba(10, 30, 18, 0.95) 100%);
       border: 2px solid rgba(90, 190, 125, 0.55);
       border-radius: 12px;
@@ -226,28 +175,14 @@
       justify-content: space-between;
       position: relative;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      flex: 0 0 clamp(260px, 24vw, 360px);
+      scroll-snap-align: start;
     }
 
-    .holiday-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.7);
-    }
-
-    .holiday-card.type-grad {
-      background: linear-gradient(175deg, rgba(50, 10, 19, 0.95) 0%, rgba(16, 24, 32, 0.98) 100%);
+    .holiday-card.grad-card {
+      background: linear-gradient(175deg, rgba(87, 41, 50, 0.95) 0%, rgba(16, 24, 32, 0.98) 100%);
       border-color: rgba(206, 184, 136, 0.75);
-      box-shadow: 0 0 18px rgba(206, 184, 136, 0.2);
-    }
-
-    .holiday-card.type-ceremony {
-      background: linear-gradient(175deg, rgba(15, 32, 58, 0.92) 0%, rgba(10, 18, 32, 0.98) 100%);
-      border-color: rgba(120, 180, 240, 0.65);
-    }
-
-    .holiday-card.type-match {
-      background: linear-gradient(175deg, rgba(42, 8, 16, 0.95) 0%, rgba(16, 24, 32, 0.98) 100%);
-      border-color: var(--gold-primary);
+      box-shadow: 0 0 20px rgba(206, 184, 136, 0.25);
     }
 
     .holiday-card::before {
@@ -275,51 +210,50 @@
       display: flex;
       flex-direction: column;
       gap: 0.2vh;
-      overflow: hidden;
     }
 
     .holiday-art {
-      width: clamp(44px, 4vw, 64px);
-      height: clamp(44px, 4vw, 64px);
+      width: clamp(48px, 4.2vw, 68px);
+      height: clamp(48px, 4.2vw, 68px);
       flex-shrink: 0;
       filter: drop-shadow(0 3px 6px rgba(0,0,0,0.7));
     }
 
     .holiday-badge {
-      font-size: clamp(0.55rem, 0.75vw, 0.9rem);
+      font-family: 'Open Sans', sans-serif;
+      font-size: clamp(0.6rem, 0.78vw, 0.9rem);
       text-transform: uppercase;
       letter-spacing: 1.5px;
-      color: #FFFFFF;
+      color: var(--fsu-white);
       font-weight: 800;
       background: rgba(0, 0, 0, 0.65);
       padding: 0.2vh 0.6vw;
       border-radius: 50px;
       align-self: flex-start;
       border: 1px solid rgba(206, 184, 136, 0.6);
-      white-space: nowrap;
     }
 
     .holiday-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(0.95rem, 1.35vw, 1.75rem);
-      font-weight: 900;
-      color: #FFFFFF;
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.1rem, 1.75vw, 2.2rem);
+      font-weight: 800;
+      color: var(--fsu-white);
       letter-spacing: 1px;
-      line-height: 1.1;
+      line-height: 1.05;
       text-shadow: 0 2px 6px rgba(0,0,0,0.8);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    }
+
+    .holiday-card.grad-card .holiday-title,
+    .holiday-card.grad-card .holiday-date {
+      color: var(--gold-bright);
     }
 
     .holiday-date {
-      font-size: clamp(0.65rem, 0.8vw, 1rem);
-      color: var(--gold-bright);
+      font-family: 'Open Sans', sans-serif;
+      font-size: clamp(0.65rem, 0.85vw, 1.05rem);
+      color: var(--fsu-gulf-sands);
       font-weight: 700;
       letter-spacing: 0.4px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
     .holiday-timer {
@@ -330,53 +264,54 @@
     }
 
     .mini-box {
-      background: rgba(16, 24, 32, 0.92);
+      background: var(--fsu-stadium-night);
       border: 1.5px solid rgba(206, 184, 136, 0.5);
       border-radius: 7px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 0.7vh 0;
+      padding: 0.8vh 0;
     }
 
     .mini-digit {
-      font-family: 'Cinzel', monospace;
-      font-size: clamp(1.3rem, 2.1vw, 2.7rem);
-      font-weight: 900;
-      color: #FFFFFF;
+      font-family: 'EB Garamond', monospace;
+      font-size: clamp(1.5rem, 2.4vw, 3rem);
+      font-weight: 800;
+      color: var(--fsu-white);
       line-height: 1;
     }
 
     .mini-label {
-      font-size: clamp(0.55rem, 0.7vw, 0.85rem);
-      color: var(--gold-bright);
+      font-family: 'Open Sans', sans-serif;
+      font-size: clamp(0.55rem, 0.7vw, 0.9rem);
+      color: var(--fsu-gold);
       text-transform: uppercase;
       letter-spacing: 1.5px;
       font-weight: 800;
-      margin-top: 0.2vh;
+      margin-top: 0.3vh;
     }
 
-    .no-top-events {
-      width: 100%;
-      height: 100%;
+    .no-events-card {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
       background: rgba(16, 24, 32, 0.4);
       border: 1.5px dashed rgba(206, 184, 136, 0.4);
       border-radius: 12px;
-      color: var(--gold-primary);
+      color: var(--fsu-gold);
+      font-family: 'Open Sans', sans-serif;
       font-size: clamp(0.85rem, 1.1vw, 1.3rem);
       letter-spacing: 1.5px;
       font-weight: 700;
     }
 
-    /* BOTTOM HALF: FEATURED CLOSEST EVENT HERO (56% height) */
-    .hero-event-card {
-      height: 56%;
-      background: linear-gradient(135deg, rgba(24, 6, 11, 0.96) 0%, rgba(52, 12, 23, 0.92) 100%);
-      border: 2.5px solid var(--gold-primary);
+    /* BOTTOM HALF: MATCH DAY HERO (55% height) */
+    .hero-match-card {
+      height: 55%;
+      background: linear-gradient(135deg, rgba(20, 4, 8, 0.96) 0%, rgba(87, 41, 50, 0.92) 100%);
+      border: 2.5px solid var(--fsu-gold);
       border-radius: 14px;
       padding: 1.5vh 2.2vw;
       display: flex;
@@ -400,13 +335,8 @@
       gap: 0.4vh;
     }
 
-    .hero-badge-row {
-      display: flex;
-      align-items: center;
-      gap: 0.8vw;
-    }
-
     .match-tag {
+      font-family: 'Open Sans', sans-serif;
       font-size: clamp(0.7rem, 0.9vw, 1.1rem);
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -417,47 +347,24 @@
       align-self: flex-start;
       padding: 0.3vh 0.9vw;
       border-radius: 50px;
-      border: 1.5px solid var(--gold-primary);
-    }
-
-    .hero-status-pill {
-      font-size: clamp(0.65rem, 0.8vw, 0.95rem);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: #4ade80;
-      font-weight: 800;
-      background: rgba(74, 222, 128, 0.12);
-      padding: 0.3vh 0.8vw;
-      border-radius: 50px;
-      border: 1px solid rgba(74, 222, 128, 0.4);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-status-pill::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #4ade80;
-      box-shadow: 0 0 8px #4ade80;
+      border: 1.5px solid var(--fsu-gold);
     }
 
     .match-title {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(1.6rem, 3.2vw, 4rem);
-      font-weight: 900;
+      font-family: 'EB Garamond', serif;
+      font-size: clamp(1.8rem, 3.3vw, 4.1rem);
+      font-weight: 800;
       color: var(--gold-bright);
-      letter-spacing: 2px;
+      letter-spacing: 1.5px;
       line-height: 1.05;
       text-shadow: 0 4px 14px rgba(0,0,0,0.95);
     }
 
     .match-subtitle {
+      font-family: 'Open Sans', sans-serif;
       font-size: clamp(0.85rem, 1.2vw, 1.5rem);
-      color: #FFF6E5;
-      letter-spacing: 0.8px;
+      color: var(--fsu-gulf-sands);
+      letter-spacing: 1px;
       font-weight: 700;
     }
 
@@ -494,29 +401,30 @@
     }
 
     .hero-digit {
-      font-family: 'Cinzel', monospace;
-      font-size: clamp(2.8rem, 5.8vw, 7rem);
-      font-weight: 900;
-      color: #FFFFFF;
+      font-family: 'EB Garamond', monospace;
+      font-size: clamp(3rem, 6vw, 7.2rem);
+      font-weight: 800;
+      color: var(--fsu-white);
       line-height: 1;
       letter-spacing: 2px;
     }
 
     .hero-box.unit-seconds .hero-digit {
-      color: var(--gold-bright);
+      color: var(--fsu-gold);
     }
 
     .hero-label {
+      font-family: 'Open Sans', sans-serif;
       font-size: clamp(0.75rem, 1vw, 1.3rem);
       text-transform: uppercase;
       letter-spacing: 3px;
-      color: var(--gold-primary);
-      font-weight: 900;
+      color: var(--fsu-gold);
+      font-weight: 800;
       margin-top: 0.6vh;
     }
 
     .match-art-container {
-      width: clamp(150px, 19vw, 280px);
+      width: clamp(160px, 20vw, 290px);
       height: 100%;
       display: flex;
       align-items: center;
@@ -530,31 +438,11 @@
       max-height: 95%;
       filter: drop-shadow(0 8px 18px rgba(0,0,0,0.9));
     }
-
-    footer {
-      position: relative;
-      z-index: 2;
-      height: 3.2vh;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-top: 1.5px solid rgba(206, 184, 136, 0.3);
-      font-size: clamp(0.65rem, 0.8vw, 1rem);
-      font-weight: 600;
-      color: #D3C4A5;
-    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="brand-group">
-      <div class="torch-badge">FSU</div>
-      <div class="brand-text">
-        <h1>FLORIDA STATE UNIVERSITY</h1>
-        <p>College of Medicine • Daytona Beach Regional Campus</p>
-      </div>
-    </div>
     <div class="status-group">
       <div class="live-clock">
         <span class="live-dot"></span>
@@ -565,90 +453,93 @@
   </header>
 
   <main>
-    <!-- TOP HALF: HORIZONTALLY SCROLLABLE UPCOMING EVENTS -->
-    <section class="top-scroll-section">
-      <div class="scroll-section-header">
-        <span>Upcoming Calendar Events (Chronological Order)</span>
-        <span class="scroll-hint">◄ Scroll horizontally for more ►</span>
-      </div>
-      <div class="top-scroll-container" id="topEventsContainer">
-        <!-- Rendered dynamically -->
-      </div>
-    </section>
+    <!-- TOP HALF: AUTO-GENERATED, CHRONOLOGICALLY SORTED, PAST EVENTS AGE OFF -->
+    <div class="top-half-grid" id="topEventsContainer">
+      <!-- Rendered dynamically from CALENDAR_EVENTS -->
+    </div>
 
-    <!-- BOTTOM HALF: CLOSEST UPCOMING FSU EVENT HERO -->
-    <section class="hero-event-card" id="heroContainer">
-      <!-- Rendered dynamically -->
+    <!-- BOTTOM HALF: CLOSEST NON-HOLIDAY FSU EVENT, AUTO-UPDATES AS EVENTS AGE OFF -->
+    <section class="hero-match-card" id="heroContainer">
+      <!-- Rendered dynamically from CALENDAR_EVENTS -->
     </section>
   </main>
 
-  <footer>
-    <span>FSU COLLEGE OF MEDICINE • VIRES, ARTES, MORES</span>
-    <span>Auto-synced • Past dates age off automatically</span>
-  </footer>
-
   <script>
-    // MASTER EVENT CALENDAR LIST
-    // To add or modify events, simply edit the list below:
+    // ======================================================================
+    // MASTER EVENT LIST — add, edit, or remove entries here only.
+    // Each event needs: id (unique, no spaces), badge, title, dateStr (display text),
+    // target (JS Date), type (controls icon + card color: 'holiday' | 'newyear' | 'orientation' | 'grad'),
+    // and cardClass ('' for green holiday style, or 'grad-card' for garnet/gold style).
+    // Events automatically age off this list once their target time passes.
+    // ======================================================================
     var CALENDAR_EVENTS = [
       {
-        id: 'pa-grad-2026',
-        title: 'PA CLASS OF 2026 GRADUATION',
-        badge: 'Commencement',
-        dateStr: 'SAT, DEC 12, 2026 • 10:00 AM',
-        subtitle: 'Opperman Music Hall • Physician Assistant Commencement',
-        targetTime: new Date('2026-12-12T10:00:00-05:00').getTime(),
-        type: 'grad'
-      },
-      {
-        id: 'winter-break-2026',
-        title: 'WINTER BREAK RECESS',
-        badge: 'Recess Begins',
-        dateStr: 'FRI, DEC 18, 2026 • 5:00 PM',
-        subtitle: 'FSU COM Campus Recess & Holiday',
-        targetTime: new Date('2026-12-18T17:00:00-05:00').getTime(),
-        type: 'holiday'
-      },
-      {
-        id: 'new-year-2027',
-        title: "NEW YEAR'S DAY 2027",
+        id: 'thanksgiving',
         badge: 'University Holiday',
-        dateStr: 'FRI, JAN 1, 2027 • MIDNIGHT',
-        subtitle: 'Ringing in the New Year',
-        targetTime: new Date('2027-01-01T00:00:00-05:00').getTime(),
-        type: 'holiday'
+        title: 'THANKSGIVING BREAK',
+        dateStr: 'THU, NOV 26, 2026',
+        target: new Date('2026-11-26T00:00:00-05:00').getTime(),
+        type: 'holiday',
+        cardClass: ''
       },
       {
-        id: 'pa-white-coat-2027',
-        title: 'PA CLASS OF 2028 WHITE COAT',
-        badge: 'Ceremony',
-        dateStr: 'FRI, JAN 15, 2027 • 10:00 AM',
-        subtitle: 'Opperman Music Hall • White Coat Ceremony',
-        targetTime: new Date('2027-01-15T10:00:00-05:00').getTime(),
-        type: 'ceremony'
-      },
-      {
-        id: 'match-day-2027',
-        title: 'FSU COM MATCH DAY 2027',
-        badge: 'NRMP Residency Reveal',
-        dateStr: 'FRI, MAR 19, 2027 • 12:00 PM EDT',
-        subtitle: 'National Resident Matching Program Reveal',
-        targetTime: new Date('2027-03-19T12:00:00-04:00').getTime(),
-        type: 'match'
-      },
-      {
-        id: 'md-grad-2027',
-        title: 'MD GRADUATION CLASS OF 2027',
+        id: 'pagrad26',
         badge: 'Commencement',
-        dateStr: 'SAT, MAY 15, 2027 • 10:00 AM',
-        subtitle: 'Ruby Diamond Concert Hall • Class of 2027 Commencement',
-        targetTime: new Date('2027-05-15T10:00:00-04:00').getTime(),
-        type: 'grad'
+        title: 'PA CLASS OF 2026 GRADUATION',
+        dateStr: 'SAT, DEC 12, 2026 • 10:00 AM',
+        target: new Date('2026-12-12T10:00:00-05:00').getTime(),
+        type: 'grad',
+        cardClass: 'grad-card'
+      },
+      {
+        id: 'break',
+        badge: 'Recess Begins',
+        title: 'WINTER BREAK',
+        dateStr: 'FRI, DEC 18, 2026 • 5:00 PM',
+        target: new Date('2026-12-18T17:00:00-05:00').getTime(),
+        type: 'holiday',
+        cardClass: ''
+      },
+      {
+        id: 'ny',
+        badge: 'New Year 2027',
+        title: "NEW YEAR'S DAY",
+        dateStr: 'FRI, JAN 1, 2027 • MIDNIGHT',
+        target: new Date('2027-01-01T00:00:00-05:00').getTime(),
+        type: 'newyear',
+        cardClass: ''
+      },
+      {
+        id: 'orient',
+        badge: 'Orientation',
+        title: 'PA CLASS OF 2027 3RD YEAR ORIENTATION',
+        dateStr: 'MON, JAN 4, 2027 • 8:00 AM',
+        target: new Date('2027-01-04T08:00:00-05:00').getTime(),
+        type: 'orientation',
+        cardClass: 'grad-card'
+      },
+      {
+        id: 'match',
+        badge: 'National Resident Matching Program',
+        title: 'FSU COLLEGE OF MEDICINE MATCH DAY',
+        dateStr: 'FRI, MAR 19, 2027 • 12:00 PM EDT',
+        target: new Date('2027-03-19T12:00:00-04:00').getTime(),
+        type: 'match',
+        cardClass: 'grad-card'
+      },
+      {
+        id: 'grad',
+        badge: 'Commencement',
+        title: 'MD GRADUATION CLASS OF 2027',
+        dateStr: 'SAT, MAY 15, 2027 • 6:00 PM (PLACEHOLDER)',
+        target: new Date('2027-05-15T18:00:00-04:00').getTime(), // Placeholder time pending confirmation
+        type: 'grad',
+        cardClass: 'grad-card'
       }
     ];
 
-    var currentHeroId = null;
     var currentTopKey = null;
+    var currentHeroId = null;
 
     function formatNumber(n) {
       return n < 10 ? '0' + n : '' + n;
@@ -668,11 +559,21 @@
       var seconds = rem % 60;
 
       return {
-        d: days < 10 ? '0' + days : '' + days,
+        d: formatNumber(days),
         h: formatNumber(hours),
         m: formatNumber(minutes),
         s: formatNumber(seconds)
       };
+    }
+
+    function setUnitValues(prefix, values) {
+      var d = document.getElementById(prefix + '-days');
+      if (d) {
+        d.textContent = values.d;
+        document.getElementById(prefix + '-hours').textContent = values.h;
+        document.getElementById(prefix + '-mins').textContent = values.m;
+        document.getElementById(prefix + '-secs').textContent = values.s;
+      }
     }
 
     function escapeHtml(str) {
@@ -683,228 +584,174 @@
         .replace(/"/g, '&quot;');
     }
 
-    function getEventSVG(type) {
-      if (type === 'grad') {
-        return `<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="32,8 58,22 32,36 6,22" fill="#101820" stroke="#CEB888" stroke-width="1.5" />
-          <polygon points="18,29 18,44 32,50 46,44 46,29" fill="#782F40" stroke="#CEB888" stroke-width="1.5" />
-          <path d="M32 22 L50 28 L52 42" stroke="#CEB888" stroke-width="1.8" fill="none" />
-          <circle cx="52" cy="44" r="2.5" fill="#CEB888" />
-          <rect x="10" y="52" width="44" height="8" rx="4" fill="#FFFFFF" stroke="#CEB888" stroke-width="1.2" />
-          <rect x="28" y="52" width="8" height="8" fill="#782F40" />
-        </svg>`;
-      } else if (type === 'holiday') {
-        return `<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="12,46 22,26 32,46" fill="#153620" stroke="#CEB888" stroke-width="1.5" />
-          <polygon points="26,46 38,20 50,46" fill="#1C472A" stroke="#CEB888" stroke-width="1.5" />
-          <polygon points="38,20 33,30 43,30" fill="#FFFFFF" opacity="0.9" />
-          <rect x="20" y="44" width="24" height="14" fill="#501A24" stroke="#CEB888" stroke-width="1.5" rx="1" />
-          <polygon points="17,44 32,32 47,44" fill="#CEB888" stroke="#F5E6C8" stroke-width="1.5" />
-          <rect x="30" y="49" width="5" height="9" fill="#120407" />
-          <path d="M4 58 Q32 54 60 58" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />
-        </svg>`;
-      } else if (type === 'ceremony') {
-        return `<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M16 12 Q32 16 48 12 L44 48 L20 48 Z" fill="#F8FAFC" stroke="#CEB888" stroke-width="1.5"/>
-          <path d="M24 12 L24 32 M40 12 L40 32" stroke="#782F40" stroke-width="2"/>
-          <circle cx="32" cy="38" r="4" fill="#CEB888"/>
-          <path d="M18 52 Q32 58 46 52" stroke="#CEB888" stroke-width="2" fill="none"/>
-        </svg>`;
-      } else if (type === 'match') {
-        return `<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="8" y="16" width="48" height="32" rx="4" fill="#2A0810" stroke="#CEB888" stroke-width="1.5" />
-          <polygon points="8,16 32,34 56,16" fill="#44111C" stroke="#CEB888" stroke-width="1.5" />
-          <circle cx="32" cy="32" r="5" fill="#CEB888" />
-        </svg>`;
-      } else {
-        return `<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="32" cy="32" r="22" fill="#782F40" stroke="#CEB888" stroke-width="2"/>
-          <path d="M32 18 L32 32 L40 36" stroke="#FBF0D9" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>`;
-      }
-    }
-
-    function getHeroSVG(type) {
-      if (type === 'match') {
-        return `<svg class="envelope-svg" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="120" cy="120" r="100" fill="url(#goldRadial)" opacity="0.35" />
-          <path d="M70 165 C66 195 75 225 95 240 C108 250 132 250 145 240 C165 225 174 195 170 165" stroke="#CEB888" stroke-width="4.5" stroke-linecap="round" fill="none" />
-          <circle cx="120" cy="246" r="8" fill="#CEB888" />
-          <circle cx="120" cy="56" r="31" fill="#100306" stroke="#CEB888" stroke-width="2.5" />
-          <path d="M46 245 C50 195 78 165 120 165 C162 165 190 195 194 245 Z" fill="#100306" stroke="#CEB888" stroke-width="2.5" />
-          <rect x="72" y="115" width="96" height="64" rx="4" fill="#2A0810" stroke="#CEB888" stroke-width="3" />
-          <polygon points="72,115 120,76 168,115" fill="#44111C" stroke="#CEB888" stroke-width="2.5" />
-          <rect x="80" y="62" width="80" height="70" rx="3" fill="#FFFBF2" stroke="#CEB888" stroke-width="2" />
-          <line x1="91" y1="78" x2="149" y2="78" stroke="#782F40" stroke-width="3.5" stroke-linecap="round" />
-          <line x1="91" y1="91" x2="139" y2="91" stroke="#8F7645" stroke-width="2.5" stroke-linecap="round" />
-          <line x1="91" y1="102" x2="145" y2="102" stroke="#8F7645" stroke-width="2.5" stroke-linecap="round" />
-          <circle cx="120" cy="119" r="6.5" fill="#782F40" />
-          <defs>
-            <radialGradient id="goldRadial" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#F5E6C8" />
-              <stop offset="60%" stop-color="#CEB888" />
-              <stop offset="100%" stop-color="#CEB888" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-        </svg>`;
+    function getEventIcon(type) {
+      if (type === 'holiday') {
+        return '<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+          '<polygon points="12,46 22,26 32,46" fill="#153620" stroke="#CEB888" stroke-width="1.5" />' +
+          '<polygon points="26,46 38,20 50,46" fill="#1C472A" stroke="#CEB888" stroke-width="1.5" />' +
+          '<polygon points="38,20 33,30 43,30" fill="#FFFFFF" opacity="0.9" />' +
+          '<rect x="20" y="44" width="24" height="14" fill="#501A24" stroke="#CEB888" stroke-width="1.5" rx="1" />' +
+          '<polygon points="17,44 32,32 47,44" fill="#CEB888" stroke="#F5E6C8" stroke-width="1.5" />' +
+          '<rect x="30" y="49" width="5" height="9" fill="#120407" />' +
+          '<rect x="23" y="47" width="5" height="5" fill="#FFE8A3" stroke="#8F7645" stroke-width="1" />' +
+          '<path d="M4 58 Q32 54 60 58" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />' +
+          '</svg>';
+      } else if (type === 'newyear') {
+        return '<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+          '<path d="M32 4 L32 10 M44 8 L40 13 M50 20 L44 21 M20 8 L24 13 M14 20 L20 21" stroke="#DFD1A7" stroke-width="1.8" stroke-linecap="round" />' +
+          '<polygon points="21,24 29,24 26,38 24,38" fill="rgba(255,230,150,0.5)" stroke="#CEB888" stroke-width="1.5" />' +
+          '<line x1="25" y1="38" x2="22" y2="52" stroke="#CEB888" stroke-width="1.8" />' +
+          '<ellipse cx="21" cy="53" rx="5" ry="1.5" fill="#CEB888" />' +
+          '<polygon points="43,24 35,24 38,38 40,38" fill="rgba(255,230,150,0.5)" stroke="#CEB888" stroke-width="1.5" />' +
+          '<line x1="39" y1="38" x2="42" y2="52" stroke="#CEB888" stroke-width="1.8" />' +
+          '<ellipse cx="43" cy="53" rx="5" ry="1.5" fill="#CEB888" />' +
+          '<polygon points="32,20 33,24 37,25 33,26 32,30 31,26 27,25 31,24" fill="#FFFFFF" />' +
+          '</svg>';
+      } else if (type === 'orientation') {
+        return '<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+          '<rect x="12" y="10" width="40" height="46" rx="3" fill="#101820" stroke="#CEB888" stroke-width="1.5" />' +
+          '<path d="M20 22 H44 M20 30 H44 M20 38 H32" stroke="#CEB888" stroke-width="2" stroke-linecap="round" />' +
+          '<circle cx="40" cy="42" r="7" fill="#782F40" stroke="#CEB888" stroke-width="1.2" />' +
+          '<path d="M37 42 L39 44 L43 40" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />' +
+          '</svg>';
       } else if (type === 'grad') {
-        return `<svg class="envelope-svg" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="120" cy="120" r="100" fill="url(#goldRadial)" opacity="0.35" />
-          <polygon points="120,30 210,75 120,120 30,75" fill="#101820" stroke="#CEB888" stroke-width="4" />
-          <polygon points="70,98 70,160 120,185 170,160 170,98" fill="#782F40" stroke="#CEB888" stroke-width="3" />
-          <path d="M120 75 L185 100 L190 160" stroke="#CEB888" stroke-width="4" fill="none" />
-          <circle cx="190" cy="168" r="8" fill="#CEB888" />
-          <rect x="40" y="200" width="160" height="28" rx="14" fill="#FFFFFF" stroke="#CEB888" stroke-width="3" />
-          <rect x="105" y="200" width="30" height="28" fill="#782F40" />
-          <defs>
-            <radialGradient id="goldRadial" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#F5E6C8" />
-              <stop offset="60%" stop-color="#CEB888" />
-              <stop offset="100%" stop-color="#CEB888" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-        </svg>`;
-      } else {
-        return `<svg class="envelope-svg" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="120" cy="120" r="100" fill="url(#goldRadial)" opacity="0.35" />
-          <circle cx="120" cy="120" r="70" fill="#782F40" stroke="#CEB888" stroke-width="4"/>
-          <path d="M120 70 L120 120 L150 135" stroke="#FBF0D9" stroke-width="6" stroke-linecap="round"/>
-          <defs>
-            <radialGradient id="goldRadial" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#F5E6C8" />
-              <stop offset="60%" stop-color="#CEB888" />
-              <stop offset="100%" stop-color="#CEB888" stop-opacity="0" />
-            </radialGradient>
-          </defs>
-        </svg>`;
+        return '<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+          '<polygon points="32,8 58,22 32,36 6,22" fill="#101820" stroke="#CEB888" stroke-width="1.5" />' +
+          '<polygon points="18,29 18,44 32,50 46,44 46,29" fill="#782F40" stroke="#CEB888" stroke-width="1.5" />' +
+          '<path d="M32 22 L50 28 L52 42" stroke="#CEB888" stroke-width="1.8" fill="none" />' +
+          '<circle cx="52" cy="44" r="2.5" fill="#CEB888" />' +
+          '<rect x="10" y="52" width="44" height="8" rx="4" fill="#FFFFFF" stroke="#CEB888" stroke-width="1.2" />' +
+          '<rect x="28" y="52" width="8" height="8" fill="#782F40" />' +
+          '</svg>';
+      } else if (type === 'match') {
+        return '<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+          '<rect x="8" y="16" width="48" height="32" rx="4" fill="#2A0810" stroke="#CEB888" stroke-width="1.5" />' +
+          '<polygon points="8,16 32,34 56,16" fill="#44111C" stroke="#CEB888" stroke-width="1.5" />' +
+          '<circle cx="32" cy="32" r="5" fill="#CEB888" />' +
+          '</svg>';
       }
+      return '';
     }
 
-    function rebuildDOM(heroEvent, topEvents) {
-      // Build Hero Section
-      var heroContainer = document.getElementById('heroContainer');
-      heroContainer.innerHTML = `
-        <div class="match-content">
-          <div class="match-header">
-            <div class="hero-badge-row">
-              <span class="match-tag">${escapeHtml(heroEvent.badge)}</span>
-              <span class="hero-status-pill">Next Upcoming Event</span>
-            </div>
-            <h2 class="match-title">${escapeHtml(heroEvent.title)}</h2>
-            <p class="match-subtitle">${escapeHtml(heroEvent.dateStr)} • ${escapeHtml(heroEvent.subtitle)}</p>
-          </div>
+    function getHeroArt() {
+      return '<svg class="envelope-svg" viewBox="0 0 240 280" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+        '<circle cx="120" cy="120" r="100" fill="url(#goldRadial)" opacity="0.35" />' +
+        '<path d="M70 165 C66 195 75 225 95 240 C108 250 132 250 145 240 C165 225 174 195 170 165" stroke="#CEB888" stroke-width="4.5" stroke-linecap="round" fill="none" />' +
+        '<circle cx="120" cy="246" r="8" fill="#CEB888" />' +
+        '<circle cx="120" cy="56" r="31" fill="#100306" stroke="#CEB888" stroke-width="2.5" />' +
+        '<path d="M46 245 C50 195 78 165 120 165 C162 165 190 195 194 245 Z" fill="#100306" stroke="#CEB888" stroke-width="2.5" />' +
+        '<rect x="72" y="115" width="96" height="64" rx="4" fill="#2A0810" stroke="#CEB888" stroke-width="3" />' +
+        '<polygon points="72,115 120,76 168,115" fill="#44111C" stroke="#CEB888" stroke-width="2.5" />' +
+        '<rect x="80" y="62" width="80" height="70" rx="3" fill="#FFFBF2" stroke="#CEB888" stroke-width="2" />' +
+        '<line x1="91" y1="78" x2="149" y2="78" stroke="#782F40" stroke-width="3.5" stroke-linecap="round" />' +
+        '<line x1="91" y1="91" x2="139" y2="91" stroke="#8F7645" stroke-width="2.5" stroke-linecap="round" />' +
+        '<line x1="91" y1="102" x2="145" y2="102" stroke="#8F7645" stroke-width="2.5" stroke-linecap="round" />' +
+        '<circle cx="120" cy="119" r="6.5" fill="#782F40" />' +
+        '<ellipse cx="68" cy="144" rx="12" ry="8.5" fill="#CEB888" transform="rotate(-15 68 144)" />' +
+        '<ellipse cx="172" cy="144" rx="12" ry="8.5" fill="#CEB888" transform="rotate(15 172 144)" />' +
+        '<polygon points="40,82 45,93 56,98 45,103 40,114 35,103 24,98 35,93" fill="#DFD1A7" />' +
+        '<polygon points="200,72 203,81 212,84 203,88 200,97 196,88 187,84 196,81" fill="#CEB888" />' +
+        '<polygon points="180,36 183,43 190,45 183,47 180,54 177,47 170,45 177,43" fill="#DFD1A7" />' +
+        '<defs>' +
+          '<radialGradient id="goldRadial" cx="50%" cy="50%" r="50%">' +
+            '<stop offset="0%" stop-color="#DFD1A7" />' +
+            '<stop offset="60%" stop-color="#CEB888" />' +
+            '<stop offset="100%" stop-color="#CEB888" stop-opacity="0" />' +
+          '</radialGradient>' +
+        '</defs>' +
+      '</svg>';
+    }
 
-          <div class="hero-timer-grid">
-            <div>
-              <div class="hero-box"><span class="hero-digit" id="hero-days">--</span></div>
-              <div class="hero-label">Days</div>
-            </div>
-            <div>
-              <div class="hero-box"><span class="hero-digit" id="hero-hours">--</span></div>
-              <div class="hero-label">Hours</div>
-            </div>
-            <div>
-              <div class="hero-box"><span class="hero-digit" id="hero-mins">--</span></div>
-              <div class="hero-label">Minutes</div>
-            </div>
-            <div class="unit-seconds">
-              <div class="hero-box unit-seconds"><span class="hero-digit" id="hero-secs">--</span></div>
-              <div class="hero-label">Seconds</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="match-art-container">
-          ${getHeroSVG(heroEvent.type)}
-        </div>
-      `;
-
-      // Build Top Horizontal Scroll Section
-      var topContainer = document.getElementById('topEventsContainer');
-      if (topEvents.length === 0) {
-        topContainer.innerHTML = `
-          <div class="no-top-events">
-            <span>✦ No additional upcoming events on calendar ✦</span>
-          </div>
-        `;
-      } else {
-        topContainer.innerHTML = topEvents.map(function(evt) {
-          return `
-            <section class="holiday-card type-${evt.type}">
-              <div class="holiday-header">
-                <div class="holiday-header-text">
-                  <span class="holiday-badge">${escapeHtml(evt.badge)}</span>
-                  <h2 class="holiday-title">${escapeHtml(evt.title)}</h2>
-                  <p class="holiday-date">${escapeHtml(evt.dateStr)}</p>
-                </div>
-                ${getEventSVG(evt.type)}
-              </div>
-              <div class="holiday-timer">
-                <div class="mini-box"><span class="mini-digit" id="${evt.id}-days">--</span><span class="mini-label">Days</span></div>
-                <div class="mini-box"><span class="mini-digit" id="${evt.id}-hours">--</span><span class="mini-label">Hrs</span></div>
-                <div class="mini-box"><span class="mini-digit" id="${evt.id}-mins">--</span><span class="mini-label">Mins</span></div>
-                <div class="mini-box"><span class="mini-digit" id="${evt.id}-secs">--</span><span class="mini-label">Secs</span></div>
-              </div>
-            </section>
-          `;
-        }).join('');
+    function renderHero(evt) {
+      var container = document.getElementById('heroContainer');
+      if (!evt) {
+        container.innerHTML = '<div class="no-events-card" style="flex:1;"><span>✦ No upcoming FSU events scheduled ✦</span></div>';
+        return;
       }
+      container.innerHTML =
+        '<div class="match-content">' +
+          '<div class="match-header">' +
+            '<span class="match-tag">' + escapeHtml(evt.badge) + '</span>' +
+            '<h2 class="match-title">' + escapeHtml(evt.title) + '</h2>' +
+            '<p class="match-subtitle">' + escapeHtml(evt.dateStr) + '</p>' +
+          '</div>' +
+          '<div class="hero-timer-grid">' +
+            '<div><div class="hero-box"><span class="hero-digit" id="hero-days">--</span></div><div class="hero-label">Days</div></div>' +
+            '<div><div class="hero-box"><span class="hero-digit" id="hero-hours">--</span></div><div class="hero-label">Hours</div></div>' +
+            '<div><div class="hero-box"><span class="hero-digit" id="hero-mins">--</span></div><div class="hero-label">Minutes</div></div>' +
+            '<div class="unit-seconds"><div class="hero-box unit-seconds"><span class="hero-digit" id="hero-secs">--</span></div><div class="hero-label">Seconds</div></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="match-art-container">' + getHeroArt() + '</div>';
     }
 
-    function updateTimerValues(prefix, targetTime, currentTime) {
-      var diff = calculateDiff(targetTime, currentTime);
-      var dEl = document.getElementById(prefix + '-days');
-      var hEl = document.getElementById(prefix + '-hours');
-      var mEl = document.getElementById(prefix + '-mins');
-      var sEl = document.getElementById(prefix + '-secs');
-
-      if (dEl) dEl.textContent = diff.d;
-      if (hEl) hEl.textContent = diff.h;
-      if (mEl) mEl.textContent = diff.m;
-      if (sEl) sEl.textContent = diff.s;
-    }
-
-    function refreshDashboard() {
-      var now = Date.now();
-
-      // Filter out past dates (targetTime <= now) and sort by closest date first
-      var activeEvents = CALENDAR_EVENTS.filter(function(e) {
-        return e.targetTime > now;
-      }).sort(function(a, b) {
-        return a.targetTime - b.targetTime;
-      });
+    function renderTopRow(activeEvents) {
+      var container = document.getElementById('topEventsContainer');
 
       if (activeEvents.length === 0) {
-        document.getElementById('topEventsContainer').innerHTML = `
-          <div class="no-top-events">
-            <span>✦ No upcoming events scheduled ✦</span>
-          </div>
-        `;
-        document.getElementById('heroContainer').innerHTML = `
-          <div style="text-align: center; width: 100%;">
-            <h2 class="match-title" style="font-size: 2rem;">ALL CALENDAR EVENTS COMPLETED</h2>
-            <p class="match-subtitle">Check back soon for new FSU COM academic calendar updates.</p>
-          </div>
-        `;
+        container.innerHTML = '<div class="no-events-card"><span>✦ No upcoming events scheduled ✦</span></div>';
         return;
       }
 
-      var heroEvent = activeEvents[0];
-      var topEvents = activeEvents.slice(1);
-      var topKey = topEvents.map(function(e) { return e.id; }).join(',');
+      container.innerHTML = activeEvents.map(function(evt) {
+        return '<section class="holiday-card ' + evt.cardClass + '">' +
+          '<div class="holiday-header">' +
+            '<div class="holiday-header-text">' +
+              '<span class="holiday-badge">' + escapeHtml(evt.badge) + '</span>' +
+              '<h2 class="holiday-title">' + escapeHtml(evt.title) + '</h2>' +
+              '<p class="holiday-date">' + escapeHtml(evt.dateStr) + '</p>' +
+            '</div>' +
+            getEventIcon(evt.type) +
+          '</div>' +
+          '<div class="holiday-timer">' +
+            '<div class="mini-box"><span class="mini-digit" id="' + evt.id + '-days">--</span><span class="mini-label">Days</span></div>' +
+            '<div class="mini-box"><span class="mini-digit" id="' + evt.id + '-hours">--</span><span class="mini-label">Hrs</span></div>' +
+            '<div class="mini-box"><span class="mini-digit" id="' + evt.id + '-mins">--</span><span class="mini-label">Mins</span></div>' +
+            '<div class="mini-box"><span class="mini-digit" id="' + evt.id + '-secs">--</span><span class="mini-label">Secs</span></div>' +
+          '</div>' +
+        '</section>';
+      }).join('');
+    }
 
-      // Rebuild structure if event order changed or an event passed
-      if (currentHeroId !== heroEvent.id || currentTopKey !== topKey) {
-        currentHeroId = heroEvent.id;
-        currentTopKey = topKey;
-        rebuildDOM(heroEvent, topEvents);
+    function refreshDisplay() {
+      var now = Date.now();
+
+      // Filter out events whose time has passed (ages them off automatically),
+      // then sort the remainder chronologically (soonest first). Top row is
+      // always in strict date order — no reordering.
+      var activeEvents = CALENDAR_EVENTS.filter(function(e) {
+        return e.target > now;
+      }).sort(function(a, b) {
+        return a.target - b.target;
+      });
+
+      // Bottom hero: closest upcoming non-holiday FSU event, auto-updates
+      // as events age off the list.
+      var isHoliday = function(e) { return e.type === 'holiday' || e.type === 'newyear'; };
+      var heroEvent = activeEvents.filter(function(e) { return !isHoliday(e); })[0] || null;
+      var heroId = heroEvent ? heroEvent.id : null;
+      if (heroId !== currentHeroId) {
+        currentHeroId = heroId;
+        renderHero(heroEvent);
+      }
+      if (heroEvent) {
+        setUnitValues('hero', calculateDiff(heroEvent.target, now));
       }
 
-      // Update ticking digits
-      updateTimerValues('hero', heroEvent.targetTime, now);
+      // Top row shows all other active events (everything except whichever
+      // one is currently featured in the bottom hero), in strict date order.
+      var topEvents = activeEvents.filter(function(e) { return !heroEvent || e.id !== heroEvent.id; });
+      var topKey = topEvents.map(function(e) { return e.id; }).join(',');
+
+      // Only rebuild the DOM when the active event set actually changes
+      // (an event passed, or one was added/removed) — avoids flicker every tick.
+      if (topKey !== currentTopKey) {
+        currentTopKey = topKey;
+        renderTopRow(topEvents);
+      }
 
       topEvents.forEach(function(evt) {
-        updateTimerValues(evt.id, evt.targetTime, now);
+        setUnitValues(evt.id, calculateDiff(evt.target, now));
       });
 
       // Header Clock
@@ -934,8 +781,8 @@
       }
     }
 
-    refreshDashboard();
-    setInterval(refreshDashboard, 1000);
+    refreshDisplay();
+    setInterval(refreshDisplay, 1000);
   </script>
 </body>
 </html>
