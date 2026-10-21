@@ -468,7 +468,7 @@
     // ======================================================================
     // MASTER EVENT LIST — add, edit, or remove entries here only.
     // Each event needs: id (unique, no spaces), badge, title, dateStr (display text),
-    // target (JS Date), type (controls icon + card color: 'holiday' | 'newyear' | 'orientation' | 'grad'),
+    // target (JS Date), type (controls icon + card color: 'holiday' | 'orientation' | 'grad'),
     // and cardClass ('' for green holiday style, or 'grad-card' for garnet/gold style).
     // Events automatically age off this list once their target time passes.
     // ======================================================================
@@ -498,15 +498,6 @@
         dateStr: 'FRI, DEC 18, 2026 • 5:00 PM',
         target: new Date('2026-12-18T17:00:00-05:00').getTime(),
         type: 'holiday',
-        cardClass: ''
-      },
-      {
-        id: 'ny',
-        badge: 'New Year 2027',
-        title: "NEW YEAR'S DAY",
-        dateStr: 'FRI, JAN 1, 2027 • MIDNIGHT',
-        target: new Date('2027-01-01T00:00:00-05:00').getTime(),
-        type: 'newyear',
         cardClass: ''
       },
       {
@@ -595,17 +586,6 @@
           '<rect x="30" y="49" width="5" height="9" fill="#120407" />' +
           '<rect x="23" y="47" width="5" height="5" fill="#FFE8A3" stroke="#8F7645" stroke-width="1" />' +
           '<path d="M4 58 Q32 54 60 58" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" />' +
-          '</svg>';
-      } else if (type === 'newyear') {
-        return '<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-          '<path d="M32 4 L32 10 M44 8 L40 13 M50 20 L44 21 M20 8 L24 13 M14 20 L20 21" stroke="#DFD1A7" stroke-width="1.8" stroke-linecap="round" />' +
-          '<polygon points="21,24 29,24 26,38 24,38" fill="rgba(255,230,150,0.5)" stroke="#CEB888" stroke-width="1.5" />' +
-          '<line x1="25" y1="38" x2="22" y2="52" stroke="#CEB888" stroke-width="1.8" />' +
-          '<ellipse cx="21" cy="53" rx="5" ry="1.5" fill="#CEB888" />' +
-          '<polygon points="43,24 35,24 38,38 40,38" fill="rgba(255,230,150,0.5)" stroke="#CEB888" stroke-width="1.5" />' +
-          '<line x1="39" y1="38" x2="42" y2="52" stroke="#CEB888" stroke-width="1.8" />' +
-          '<ellipse cx="43" cy="53" rx="5" ry="1.5" fill="#CEB888" />' +
-          '<polygon points="32,20 33,24 37,25 33,26 32,30 31,26 27,25 31,24" fill="#FFFFFF" />' +
           '</svg>';
       } else if (type === 'orientation') {
         return '<svg class="holiday-art" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">' +
@@ -727,7 +707,7 @@
 
       // Bottom hero: closest upcoming non-holiday FSU event, auto-updates
       // as events age off the list.
-      var isHoliday = function(e) { return e.type === 'holiday' || e.type === 'newyear'; };
+      var isHoliday = function(e) { return e.type === 'holiday'; };
       var heroEvent = activeEvents.filter(function(e) { return !isHoliday(e); })[0] || null;
       var heroId = heroEvent ? heroEvent.id : null;
       if (heroId !== currentHeroId) {
